@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'ITUCSDB1913'
-copyright = '2018, ITUCSDB1913'
+copyright = '2019, ITUCSDB1913'
 author = 'ITUCSDB1913'
 
 # The short X.Y version
