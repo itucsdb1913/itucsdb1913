@@ -16,10 +16,10 @@ def load_user(user_id):
     return get_user(user_id)
 
 
-def create_app():
-    app.config.from_object("settings")
+#def create_app():
+app.config.from_object("settings")
 
-    app.add_url_rule("/", view_func=views.home_page, methods=["GET", "POST"])
+app.add_url_rule("/", view_func=views.home_page, methods=["GET", "POST"])
 
     # app.add_url_rule(
     #     "/login", view_func=views.login_page, methods=["GET", "POST"]
@@ -42,12 +42,12 @@ def create_app():
     # lm.init_app(app)
     # lm.login_view = "login_page"
 
-    db = Database()
-    app.config["db"] = db
+db = Database()
+app.config["db"] = db
 
-    return app
+    #return app
 
 
 if __name__ == "__main__":
-    create_app()
+    #create_app()
     app.run()
