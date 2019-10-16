@@ -19,7 +19,7 @@ def initialize(url):
 
 
 if __name__ == "__main__":
-    url = os.getenv("postgres://aqqfheodautezc:579a54a9c7f0b81df63811b9c7829d946b2bbb04d5e6917b4ddccaa536f430dc@ec2-54-246-100-246.eu-west-1.compute.amazonaws.com:5432/d7a5dl9hnei5sp")
+    url = os.getenv("DATABASE_URL")
     if url is None:
         print("Usage: DATABASE_URL=url python dbinit.py", file=sys.stderr)
         sys.exit(1)
