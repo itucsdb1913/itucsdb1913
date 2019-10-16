@@ -16,6 +16,7 @@
           <span class="navbar-item">
             <a class="button is-link" href="{{ url_for('home_page') }}">Home</a>
           </span>
+          {% if 1 == 0 %}
           <span class="navbar-item">
             <a class="button is-link" href="{{ url_for('movies_page') }}">List movies</a>
           </span>
@@ -30,6 +31,7 @@
           {% else %}
             {{ current_user.username }}
             <a class="button is-link" href="{{ url_for('logout_page') }}">Log out</a>
+          {% endif %}
           {% endif %}
           </span>
         </div>
