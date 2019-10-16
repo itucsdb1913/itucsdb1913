@@ -6,6 +6,7 @@ from database import Database
 #from movie import Movie
 from user import get_user
 
+app = Flask(__name__)
 
 lm = LoginManager()
 
@@ -16,7 +17,6 @@ def load_user(user_id):
 
 
 def create_app():
-    app = Flask(__name__)
     app.config.from_object("settings")
 
     app.add_url_rule("/", view_func=views.home_page, methods=["GET", "POST"])
@@ -49,5 +49,5 @@ def create_app():
 
 
 if __name__ == "__main__":
-    app = create_app()
+    create_app()
     app.run()
