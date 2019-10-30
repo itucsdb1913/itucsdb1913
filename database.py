@@ -38,7 +38,7 @@ class Database:
         cursor = self.cur
         query = "SELECT TITLE, YR FROM MOVIE WHERE (ID = %s)"
         cursor.execute(query, (movie_key,))
-        title, year = what
+        title, year = cursor.fetchone()
         movie_ = Movie(title, year=year)
         return movie_
 
