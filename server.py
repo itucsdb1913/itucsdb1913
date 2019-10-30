@@ -6,6 +6,8 @@ from movie import Movie
 
 app = Flask(__name__)
 
+app.config.from_object("settings")
+
 app.add_url_rule("/", view_func=views.home_page)
 app.add_url_rule("/movies", view_func=views.movies_page, methods=["GET", "POST"])
 app.add_url_rule("/movies/<int:movie_key>", view_func=views.movie_page)
@@ -16,9 +18,8 @@ app.add_url_rule(
     methods=["GET", "POST"],
 )
 
+
 db = Database()
-db.add_movie(Movie("Slaughterhouse-Five", year=1972))
-db.add_movie(Movie("The Shining"))
 app.config["db"] = db
 
 

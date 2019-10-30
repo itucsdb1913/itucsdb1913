@@ -20,13 +20,18 @@
             <a class="button is-link" href="{{ url_for('movies_page') }}">List movies</a>
           </span>
           <span class="navbar-item">
-              <a class="button is-link" href="{{ url_for('movie_add_page') }}">Add movie</a>
+            <a class="button is-link" href="{{ url_for('movie_add_page') }}">Add movie</a>
           </span>
+          <span class="navbar-item">
         </div>
       </nav>
     </header>
 
     <main>
+        {% for message in get_flashed_messages() %}
+        <div class="notification is-info">{{ message }}</div>
+        {% endfor %}
+
       <section class="section">
         <div class="content">
           {% block content %}{% endblock %}

@@ -2,7 +2,6 @@ from datetime import datetime
 from movie import Movie
 from flask import render_template, current_app, abort, redirect, url_for, request
 
-
 def home_page():
     today = datetime.today()
     day_name = today.strftime("%A")
@@ -73,3 +72,5 @@ def movies_page():
         for form_movie_key in form_movie_keys:
             db.delete_movie(int(form_movie_key))
         return redirect(url_for("movies_page"))
+
+
