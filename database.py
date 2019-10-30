@@ -13,10 +13,10 @@ class Database:
     def add_movie(self, movie):
 
         cursor = self.cur
-        query = "INSERT INTO MOVIE (TITLE, YR) VALUES (%s, %s)"
+        query = "INSERT INTO MOVIE (TITLE, YR) VALUES (%s, %s) RETURNING id"
         cursor.execute(query, (movie.title, movie.year))
         self.con.commit()
-        movie_key = cursor.lastrowid
+        movie_key = cursor.fetchone()[0]
         return movie_key
 
     def update_movie(self, movie_key, movie):
@@ -37,14 +37,8 @@ class Database:
 
         cursor = self.cur
         query = "SELECT TITLE, YR FROM MOVIE WHERE (ID = %s)"
-
-        try:
-            cursor.execute(query, (movie_key,))
-        except Exception as e:
-            print
-            e.message
-            cursor = self.cur
-        title, year = cursor.fetchone()
+        cursor.execute(query, (movie_key,))
+        title, year = what
         movie_ = Movie(title, year=year)
         return movie_
 
