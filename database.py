@@ -37,14 +37,19 @@ class Database:
 
         cursor = self.cur
         query = "SELECT TITLE, YR FROM MOVIE WHERE (ID = %s)"
-        cursor.execute(query, (movie_key,))
+
+        try:
+            cursor.execute(query, (movie_key,))
+        except Exception as e:
+            print
+            e.message
+            cursor = self.cur
         title, year = cursor.fetchone()
         movie_ = Movie(title, year=year)
         return movie_
 
     def get_movies(self):
         movies = []
-
         cursor = self.cur
         query = "SELECT ID, TITLE, YR FROM MOVIE ORDER BY ID"
         cursor.execute(query)
