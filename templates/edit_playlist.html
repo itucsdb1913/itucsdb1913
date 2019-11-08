@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1 class="title">{{playlist.title}} {% if playlist.isprivate %}<i>(Private)</i>{% endif %}
+        <a href="/edit_playlist_info/{{playlist.id}}" class="btn btn-success btn-lg float-right">Edit Playlist Info</a>
+    </h1>
+
+    <form action="" method="POST" name="song_list">
+      <table class="table table-striped">
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Genre</th>
+                <th>Duration</th>
+                <th></th>
+            </tr>
+        {% for song in songs %}
+            <tr>
+              <td>
+                <label class="btn btn-danger">
+                  <input type="checkbox" name="song_ids" value="{{ song.id }}">
+                </label>
+              </td>
+                <td>{{song.title}}</td>
+                <td>{{ song.artist }}</td>
+                <td>{{ song.genre }}</td>
+                 <!-- <td>{{ song.bpm }}</td> -->
+                <td>{{ song.duration }}</td>
+                <td><a href="/edit_song/{{ song.id }}" class="btn btn-info">Edit</a></td>
+            </tr>
+        {% endfor %}
+      </table>
+        <div>
+          <button class="btn btn-danger mr-1">Delete Selected Songs</button>
+          <a href="/add_song/{{playlist.id}}" class="btn btn-success">Add a Song</a>
+          <a href="/delete_playlist/{{playlist.id}}" class="btn btn-danger float-right">Delete This Playlist</a>
+        </div>
+    </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1 class="title">{{playlist.title}} {% if playlist.isprivate %}<i>(Private)</i>{% endif %}</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Genre</th>
+            <th>Duration</th>
+        </tr>
+        {% for song in songs %}
+            <tr>
+                <td>{{song.title}}</td>
+                <td>{{song.artist}}</td>
+                <td>{{song.genre}}</td>
+                <td>{{song.duration}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        currLoc = $(location).attr('href');
+        $("input:text").val(currLoc);
+    });
+</script>
+<input type="text" name="user" onclick="this.select();"></p>
+
+{% endblock %}
