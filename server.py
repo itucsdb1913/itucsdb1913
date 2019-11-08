@@ -2,6 +2,7 @@ from flask import Flask
 from views import *
 
 app = Flask(__name__)
+app.secret_key = 'hello'
 
 app.add_url_rule("/", view_func=home)
 app.add_url_rule("/playlist/<string:id>", view_func=playlist)
@@ -18,5 +19,4 @@ app.add_url_rule("/edit_playlist_info/<string:id>", view_func=edit_playlist_info
 
 
 if __name__ == '__main__':
-    app.secret_key = 'hello'
     app.run(debug=True)
