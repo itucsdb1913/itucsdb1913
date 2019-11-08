@@ -19,9 +19,9 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'ITUCSDB18NN'
-copyright = '2018, ITUCSDB18NN'
-author = 'ITUCSDB18NN'
+project = 'ITUCSDB1913'
+copyright = '2019, ITUCSDB1913'
+author = 'ITUCSDB1913'
 
 # The short X.Y version
 version = ''
@@ -102,7 +102,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'ITUCSDB18NNdoc'
+htmlhelp_basename = 'ITUCSDB1913doc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -129,8 +129,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'ITUCSDB18NN.tex', 'ITUCSDB18NN Documentation',
-     'ITUCSDB18NN', 'manual'),
+    (master_doc, 'ITUCSDB1913.tex', 'ITUCSDB1913 Documentation',
+     'ITUCSDB1913', 'manual'),
 ]
 
 
@@ -139,7 +139,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'itucsdb18nn', 'ITUCSDB18NN Documentation',
+    (master_doc, 'itucsdb1913', 'ITUCSDB1913 Documentation',
      [author], 1)
 ]
 
