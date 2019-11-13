@@ -3,6 +3,7 @@
 {% block body %}
     <h1>Dashboard</h1>
     <p class="lead">Welcome <mark>{{session.name}}</mark>. You can view and edit your playlists here.</p>
+{% if playlists %}
     <table class="table table-striped">
         <tr>
             <th>Title</th>
@@ -19,5 +20,7 @@
             </tr>
         {% endfor %}
     </table>
+{% endif %}
+
     <a class="btn btn-success" href="/create_playlist">Create New Playlist</a>
 {% endblock %}

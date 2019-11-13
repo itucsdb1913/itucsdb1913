@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>Delete Your Account</h1>
+    <p class="lead">We are sorry to see you leave. This process will delete all your playlists and songs on them.</p>
+    <p class="lead">Please enter your password in order to delete your account.</p>
+
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method="POST" action="">
+        <div class="form-group">
+            {{ render_field(form.password, class_="form-control") }}
+        </div>
+        <p><input type="submit" class="btn btn-danger" value="Delete"/></p>
+    </form>
+
+{% endblock %}

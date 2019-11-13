@@ -1,6 +1,6 @@
 from flask import render_template, request, session, redirect, url_for, flash
 from data import Database
-from forms import RegisterForm, PlaylistForm, SongForm
+from forms import RegisterForm, PlaylistForm, SongForm, UpdateUser
 from functools import wraps
 from user import User
 from passlib.hash import sha256_crypt
@@ -44,6 +44,9 @@ def register():
         user.name = form.name.data
         user.username = form.username.data
         user.password = sha256_crypt.encrypt(str(form.password.data))
+        username_check = db.get_user(user.username)
+        if username_check is not None:
+            return render_template('register.html', form=form, error="User already exists")
         db.add_user(user)
         flash("You are now registered.", "success")
         return redirect('/login')
@@ -56,7 +59,6 @@ def login():
         user = User()
         user.username = request.form['username']
         user.password_candidate = request.form['password']
-
         result = db.get_user(user.username)
 
         if result:
@@ -84,16 +86,19 @@ def login():
 def playlist(id):
     songs = db.get_songs(id)
     playlist = db.get_playlist(id)
+    userid = playlist['userid']
+    user = db.get_user(id=userid)
+    username = user['username']
     if playlist is None:
         playlists = db.get_public_playlists()
         return render_template('home.html', error="Playlist not found", playlists=playlists)
     if int(playlist['isprivate']) and (not user_check(id)):
         return render_template('home.html', error="This playlist is private")
     if songs:
-        return render_template('/playlist.html', songs=songs, playlist=playlist)
+        return render_template('/playlist.html', songs=songs, playlist=playlist, username=username)
     else:
         msg = "Looks like there is no song in this playlist"
-        return render_template('/playlist.html', msg=msg, playlist=playlist)
+        return render_template('/playlist.html', msg=msg, playlist=playlist, username=username)
 
 
 # dashboard page
@@ -146,6 +151,54 @@ def edit_playlist(id):
         return render_template('edit_playlist.html', msg=msg, playlist=playlist)
 
 
+@is_logged_in
+def profile():
+    form = UpdateUser(request.form)
+    form.name.data = session['name']
+    form.username.data = session['username']
+    user = db.get_user(session['username'])
+    totalsong = db.total_song(session['id'])[0]
+    totalplaylist = user['totalplaylist']
+    if request.method == 'POST' and form.validate():
+        if request.form['password'] != "":
+            password = sha256_crypt.encrypt(str(request.form['password']))
+        else:
+            password = None
+
+        if request.form['name'] == "":
+            name = None
+        else:
+            name = request.form['name']
+
+        if (name is None or name == session['name']) and password is None:
+            return render_template('profile.html', form=form, totalplaylist=totalplaylist, totalsong=totalsong,
+                                   msg="Nothing changed")
+        id = session['id']
+        db.update_user(id, name=name, password=password)
+        session['name'] = name
+        flash("Successfully updated", 'success')
+        return redirect(url_for('dashboard'))
+    return render_template("profile.html", form=form, totalplaylist=totalplaylist, totalsong=totalsong, )
+
+
+def delete_user():
+    form = RegisterForm()
+    if request.method == 'POST':
+        userid = session['id']
+        password_candidate = request.form['password']
+        user = db.get_user(session['username'])
+        if sha256_crypt.verify(password_candidate, user['password']):
+            db.delete_user(userid)
+            session.clear()
+            flash("Your account successfully deleted", "success")
+            return redirect(url_for('login'))
+        else:
+            flash("Wrong password", "danger")
+            return redirect(url_for('delete_user'))
+    return render_template("delete_user.html", form=form)
+
+
+@is_logged_in
 def edit_playlist_info(id):
     if not user_check(id):
         playlists = db.get_public_playlists()
@@ -161,11 +214,11 @@ def edit_playlist_info(id):
         comment = request.form['comment']
         isprivate = request.form.get("isprivate")
         if isprivate:
-            isprivate=1
+            isprivate = 1
         else:
-            isprivate=0
+            isprivate = 0
         db.update_playlist(id, title, comment, isprivate)
-        flash('Song updated', 'success')
+        flash('Playlist updated', 'success')
         return redirect(url_for('edit_playlist', id=id))
 
     return render_template('/edit_playlist_info.html', form=form, checked=checked)

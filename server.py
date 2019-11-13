@@ -16,7 +16,8 @@ app.add_url_rule("/add_song/<string:id>", view_func=add_song, methods=["GET", "P
 app.add_url_rule("/edit_song/<string:id>", view_func=edit_song, methods=["GET", "POST"])
 app.add_url_rule("/logout", view_func=logout)
 app.add_url_rule("/edit_playlist_info/<string:id>", view_func=edit_playlist_info, methods=["GET", "POST"])
-
+app.add_url_rule("/profile", view_func=profile, methods=["GET", "POST"])
+app.add_url_rule("/delete_user", view_func=delete_user, methods=["GET", "POST"])
 
 if __name__ == '__main__':
     app.run(debug=True)

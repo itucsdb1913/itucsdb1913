@@ -2,6 +2,9 @@
 
 {% block body %}
     <h1 class="title">{{playlist.title}} {% if playlist.isprivate %}<i>(Private)</i>{% endif %}</h1>
+    <small>Created by {{username}} on {{playlist.create_date}}</small>
+    <hr>
+{% if not msg %}
     <table class="table table-striped">
         <tr>
             <th>Title</th>
@@ -18,6 +21,7 @@
             </tr>
         {% endfor %}
     </table>
+{% endif %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
