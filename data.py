@@ -114,7 +114,7 @@ class Database:
             cursor.execute(get_userid, [playlistid])
             userid = cursor.fetchone()
             query2 = "UPDATE users SET totalplaylist=totalplaylist-1 WHERE id = %s"
-            cursor.execute(query2, [userid[0]])
+            cursor.execute(query2, [userid)
             conn.commit()
 
     def add_song(self, title, artist, genre, duration, playlistid):
