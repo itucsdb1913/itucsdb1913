@@ -106,16 +106,15 @@ class Database:
     def delete_playlist(self, playlistid):
         with self.con as conn:
             cursor = conn.cursor()
-            cursor.execute(select_userid, [playlistid])
-            result = cursor.fetchone()
-            userid = result['userid']
             delete_songs = "DELETE FROM songs where playlistid = %s"
             cursor.execute(delete_songs, [playlistid])
             delete_playlist = "DELETE FROM playlists where id = %s"
             cursor.execute(delete_playlist, [playlistid])
-            select_userid = "SELECT userid FROM playlists WHERE id=%s"
+            get_userid = "SELECT userid FROM playlists WHERE id=%s"
+            cursor.execute(get_userid, [playlistid])
+            userid = cursor.fetchone()
             query2 = "UPDATE users SET totalplaylist=totalplaylist-1 WHERE id = %s"
-            cursor.execute(query2, [userid])
+            cursor.execute(query2, [userid[0]])
             conn.commit()
 
     def add_song(self, title, artist, genre, duration, playlistid):
