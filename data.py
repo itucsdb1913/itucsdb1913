@@ -49,6 +49,8 @@ class Database:
         return songs
 
     def get_playlist(self, id):
+        if not str(id).isdigit():
+            return None
         with self.con.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             query = "SELECT * FROM playlists WHERE id = %s"
             cursor.execute(query, [id])
@@ -69,11 +71,11 @@ class Database:
             playlists = cursor.fetchall()
         return playlists
 
-    def create_playlist(self, title, comment, userid, isprivate):
+    def create_playlist(self, title, comment, userid, isprivate, image=None):
         with self.con as conn:
             cursor = conn.cursor()
-            query = "INSERT INTO playlists(title, comment, userid, isprivate) VALUES(%s, %s, %s, %s)"
-            cursor.execute(query, (title, comment, userid, isprivate))
+            query = "INSERT INTO playlists(title, comment, userid, isprivate, image) VALUES(%s, %s, %s, %s, %s) RETURNING id"
+            cursor.execute(query, (title, comment, userid, isprivate, image))
             query2 = "UPDATE users SET totalplaylist=totalplaylist+1 WHERE id=%s"
             cursor.execute(query2, [userid])
             conn.commit()
@@ -127,6 +129,8 @@ class Database:
             conn.commit()
 
     def get_song(self, songid):
+        if not str(songid).isdigit():
+            return None
         with self.con.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             query = 'SELECT * FROM songs WHERE id = %s'
             cursor.execute(query, [songid])
@@ -150,3 +154,12 @@ class Database:
             cursor.execute(query2, [result, userid])
             conn.commit()
         return result
+
+    def get_img(self, playlistid):
+        with self.con as conn:
+            cursor = conn.cursor()
+            query = 'SELECT images from images WHERE playlistid=%s'
+            cursor.execute(query, [playlistid])
+            result = cursor.fetchone()
+            result = result[0]
+            return result

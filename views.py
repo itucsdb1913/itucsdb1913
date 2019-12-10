@@ -1,3 +1,5 @@
+import base64
+
 from flask import render_template, request, session, redirect, url_for, flash
 from data import Database
 from forms import RegisterForm, PlaylistForm, SongForm, UpdateUser
@@ -84,14 +86,18 @@ def login():
 
 # playlist page
 def playlist(id):
-    songs = db.get_songs(id)
     playlist = db.get_playlist(id)
-    userid = playlist['userid']
-    user = db.get_user(id=userid)
-    username = user['username']
     if playlist is None:
         playlists = db.get_public_playlists()
         return render_template('home.html', error="Playlist not found", playlists=playlists)
+    songs = db.get_songs(id)
+    userid = playlist['userid']
+    user = db.get_user(id=userid)
+    username = user['username']
+    if playlist['image']:
+        image = playlist['image']
+        playlist['image'] = base64.b64encode(image)
+        playlist['image'] = playlist['image'].decode('utf-8')
     if int(playlist['isprivate']) and (not user_check(id)):
         return render_template('home.html', error="This playlist is private")
     if songs:
@@ -120,11 +126,17 @@ def create_playlist():
         title = form.title.data
         comment = form.comment.data
         userid = session['id']
-        if request.form.get("isprivate"):
+        print(request.form.get("isprivate"))
+        if request.form.get("isprivate") == 1:
             isprivate = 1
         else:
             isprivate = 0
-        db.create_playlist(title, comment, userid, isprivate)
+        if request.files["inputFile"]:
+            file = request.files["inputFile"]
+            f = file.read()
+            db.create_playlist(title, comment, userid, isprivate, image=f)
+        else:
+            db.create_playlist(title, comment, userid, isprivate)
         flash('Playlist created', 'success')
         return redirect(url_for('dashboard'))
     return render_template('create_playlist.html', form=form)
@@ -158,6 +170,8 @@ def profile():
     form.username.data = session['username']
     user = db.get_user(session['username'])
     totalsong = db.total_song(session['id'])[0]
+    if totalsong is None:
+        totalsong = 0
     totalplaylist = user['totalplaylist']
     if request.method == 'POST' and form.validate():
         if request.form['password'] != "":
@@ -180,7 +194,7 @@ def profile():
         return redirect(url_for('dashboard'))
     return render_template("profile.html", form=form, totalplaylist=totalplaylist, totalsong=totalsong, )
 
-
+@is_logged_in
 def delete_user():
     form = RegisterForm()
     if request.method == 'POST':

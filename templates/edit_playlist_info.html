@@ -10,9 +10,15 @@
         <div class="form-group">
             {{ render_field(form.comment, class_="form-control") }}
         </div>
-        <label class="btn btn-secondary">
-            <input type="checkbox" name="isprivate" {% if checked %} checked {% endif %} > Make this list private
-        </label>
+        <div class="form-group">
+            <p>Make this list private:</p>
+            <label class="radio-inline">
+                <input type="radio" name="isprivate" value="0" checked> No
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="isprivate" value="1"> Yes
+            </label>
+        </div>
         <p><input type="submit" class="btn btn-primary" value="Submit"/></p>
     </form>
 {% endblock %}

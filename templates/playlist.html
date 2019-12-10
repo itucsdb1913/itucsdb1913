@@ -22,6 +22,19 @@
         {% endfor %}
     </table>
 {% endif %}
+
+<div class="row">
+    <div class="col">
+{% if playlist.image %}
+ <img src="data:image/png;base64, {{playlist.image}}" class="img-fluid float-left">
+{% endif %}
+    </div>
+{% if playlist.comment %}
+    <div class="col-6">
+        <p class="lead">{{playlist.comment}}</p>
+    </div>
+{% endif %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
@@ -29,6 +42,9 @@
         $("input:text").val(currLoc);
     });
 </script>
-<input type="text" name="user" onclick="this.select();"></p>
-
+    <div class="colq">
+    <p>Share this playlist:</p>
+        <input type="text" name="user" class="form-control" onclick="this.select();" readonly>
+    </div>
+</div>
 {% endblock %}
