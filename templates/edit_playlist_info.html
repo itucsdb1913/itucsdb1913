@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Edit Playlist</h1>
     {% from "includes/_formhelpers.html" import render_field %}
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         <div class="form-group">
             {{ render_field(form.title, class_="form-control") }}
         </div>
@@ -11,12 +11,16 @@
             {{ render_field(form.comment, class_="form-control") }}
         </div>
         <div class="form-group">
+            <label for="inputFile">Cover photo:</label>
+            <input type="file" class="form-control-file" name="inputFile" accept="image/*">
+        </div>
+        <div class="form-group">
             <p>Make this list private:</p>
             <label class="radio-inline">
-                <input type="radio" name="isprivate" value="0" checked> No
+                <input type="radio" name="isprivate" value="0" {% if not checked %} checked {% endif %}> No
             </label>
             <label class="radio-inline">
-                <input type="radio" name="isprivate" value="1"> Yes
+                <input type="radio" name="isprivate" value="1" {% if checked %} checked {% endif %}> Yes
             </label>
         </div>
         <p><input type="submit" class="btn btn-primary" value="Submit"/></p>

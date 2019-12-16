@@ -150,8 +150,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'ITUCSDB18NN', 'ITUCSDB18NN Documentation',
-     author, 'ITUCSDB18NN', 'One line description of project.',
+    (master_doc, 'ITUCSDB1913', 'ITUCSDB1913 Documentation',
+     author, 'ITUCSDB1913', 'One line description of project.',
      'Miscellaneous'),
 ]
 

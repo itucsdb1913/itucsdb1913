@@ -4,19 +4,16 @@ User Guide
 **explain how your application works from the user perspective, use
 screenshots whereever appropriate**
 
-**to add a picture, use the following example**::
 
-   .. figure:: picture.png
-      :scale: 50 %
-      :alt: map to buried treasure
 
-      This is the caption of the figure (a simple paragraph).
+..figure:: homepage.png
+	:scale: 50 %
+	:alt: Homepage
+
+When you enter the site, you will see a page like below one. You need to register to create playlists. Also you can see last 10 playlists created at "Recently created playlists:" section.
 
 .. toctree::
 
    member1
-   member2
-   member3
-   member4
-   member5
+ 
    

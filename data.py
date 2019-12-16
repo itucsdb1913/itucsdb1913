@@ -66,7 +66,7 @@ class Database:
 
     def get_public_playlists(self):
         with self.con.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
-            query = "SELECT * FROM playlists WHERE (isprivate = 0) LIMIT 10"
+            query = "SELECT * FROM playlists WHERE (isprivate = 0) ORDER BY id DESC LIMIT 10"
             cursor.execute(query)
             playlists = cursor.fetchall()
         return playlists
@@ -80,10 +80,14 @@ class Database:
             cursor.execute(query2, [userid])
             conn.commit()
 
-    def update_playlist(self, playlistid, title, comment, isprivate):
+    def update_playlist(self, playlistid, title, comment, isprivate, image=None):
         with self.con.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
-            query = 'UPDATE playlists SET title=%s, comment=%s, isprivate=%s WHERE id = %s'
-            cursor.execute(query, (title, comment, isprivate, playlistid))
+            if image is not None:
+                query = 'UPDATE playlists SET title=%s, comment=%s, isprivate=%s, image=%s WHERE id = %s'
+                cursor.execute(query, (title, comment, isprivate, image, playlistid))
+            else:
+                query = 'UPDATE playlists SET title=%s, comment=%s, isprivate=%s WHERE id = %s'
+                cursor.execute(query, (title, comment, isprivate, playlistid))
             self.con.commit()
 
     def update_user(self, id, name=None, password=None):

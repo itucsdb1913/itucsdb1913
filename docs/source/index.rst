@@ -1,17 +1,14 @@
 Welcome to itucsdbNN's documentation!
 =====================================
 
-:Team: Team Name
+:Team: Playlist
 
 :Members:
 
-   * Member 1
-   * Member 2
-   * Member 3
-   * Member 4
-   * Member 5
+   * Oğuzhan Kürşat Karayılan
+   
 
-**project description goes here (a few paragraphs)**
+**Playlist was specially designed for DJs to easily create and view playlists. You need to create an account first. Then, you can create playlists optionaly with small text and cover photos. You can add songs to them. Also you can edit songs and playlists.**
 
 Contents:
 

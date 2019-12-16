@@ -1,5 +1,5 @@
 import base64
-
+import imghdr
 from flask import render_template, request, session, redirect, url_for, flash
 from data import Database
 from forms import RegisterForm, PlaylistForm, SongForm, UpdateUser
@@ -126,15 +126,17 @@ def create_playlist():
         title = form.title.data
         comment = form.comment.data
         userid = session['id']
-        print(request.form.get("isprivate"))
-        if request.form.get("isprivate") == 1:
+        if request.form.get("isprivate") == "1":
             isprivate = 1
         else:
             isprivate = 0
         if request.files["inputFile"]:
             file = request.files["inputFile"]
-            f = file.read()
-            db.create_playlist(title, comment, userid, isprivate, image=f)
+            if(imghdr.what(file) is not None):
+                f = file.read()
+                db.create_playlist(title, comment, userid, isprivate, image=f)
+            else:
+                return render_template('create_playlist.html', form=form, error="Only images are accepted")
         else:
             db.create_playlist(title, comment, userid, isprivate)
         flash('Playlist created', 'success')
@@ -226,11 +228,18 @@ def edit_playlist_info(id):
     if request.method == 'POST' and form.validate():
         title = request.form['title']
         comment = request.form['comment']
-        isprivate = request.form.get("isprivate")
-        if isprivate:
+        if request.form.get("isprivate") == "1":
             isprivate = 1
         else:
             isprivate = 0
+        if request.files["inputFile"]:
+            file = request.files["inputFile"]
+            if imghdr.what(file) is not None:
+                f = file.read()
+                db.update_playlist(id, title, comment, isprivate, image=f)
+            else:
+                return render_template('/edit_playlist_info.html', form=form, error="Only images are accepted", checked=checked)
+
         db.update_playlist(id, title, comment, isprivate)
         flash('Playlist updated', 'success')
         return redirect(url_for('edit_playlist', id=id))

@@ -26,7 +26,7 @@
 <div class="row">
     <div class="col">
 {% if playlist.image %}
- <img src="data:image/png;base64, {{playlist.image}}" class="img-fluid float-left">
+ <img style="height: 300px; width: 300px;" src="data:image/png;base64, {{playlist.image}}" class="img-thumbnail float-left">
 {% endif %}
     </div>
 {% if playlist.comment %}
@@ -42,7 +42,7 @@
         $("input:text").val(currLoc);
     });
 </script>
-    <div class="colq">
+    <div class="col">
     <p>Share this playlist:</p>
         <input type="text" name="user" class="form-control" onclick="this.select();" readonly>
     </div>
