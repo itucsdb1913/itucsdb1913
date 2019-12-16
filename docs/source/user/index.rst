@@ -6,7 +6,7 @@ screenshots whereever appropriate**
 
 
 
-.. figure:: /homepage.png
+.. figure:: homepage.png
 	:scale: 50 %
 	:alt: Homepage
 
