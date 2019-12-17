@@ -12,5 +12,8 @@ Welcome to itucsdb1913's documentation!
 
 Contents:
 
+.. toctree::
+   :maxdepth: 1
+
    user/index
    developer/index
