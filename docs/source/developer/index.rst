@@ -13,6 +13,7 @@ Code
 ----
 
 .. code-block:: python
+
 	INIT_STATEMENTS = [
 	    '''CREATE TABLE IF NOT EXISTS users(
 	        name varchar(25), 
@@ -47,6 +48,7 @@ Code
 These statements are run in dbinit.py to initialize database in first run.
 
 .. code-block:: python
+
 	from flask import Flask
 	from views import *
 
@@ -73,6 +75,7 @@ These statements are run in dbinit.py to initialize database in first run.
 server.py - This is main python code. It runs server and has url rules. When a request comes from certain link, it tells what function will be called. 
 
 .. code-block:: python
+
 	import base64
 	import imghdr
 	from flask import render_template, request, session, redirect, url_for, flash
@@ -388,6 +391,7 @@ server.py - This is main python code. It runs server and has url rules. When a r
 views.py - This is where all view functions defined. View functions create pages. 
 
 .. code-block:: python
+
 	import psycopg2
 	import psycopg2.extras
 
