@@ -46,9 +46,6 @@ Code
 	]
 These statements are run in dbinit.py to initialize database in first run.
 
-
-
-
 .. code-block:: python
 	from flask import Flask
 	from views import *
@@ -561,8 +558,3 @@ views.py - This is where all view functions defined. View functions create pages
 	            result = result[0]
 	            return result
 data.py - This file has database functions. When there is a need in views functions to update, insert or delete database, these functions are called. psycopg2 library is used to connect heroku postgresql database. 
-
-.. toctree::
-
-   member1
-  
