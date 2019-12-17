@@ -12,14 +12,15 @@ class RegisterForm(Form):
     ])
     confirm = PasswordField('Confirm Password')
 
+
 def update_check(min, max):
     def _check(form, field):
         error = "Must be between %d and %d characters long" % (min, max)
         if field.data != "":
             if len(field.data) > max or len(field.data) < min:
                 raise ValidationError(error)
-    return _check
 
+    return _check
 
 
 class UpdateUser(Form):
