@@ -22,7 +22,8 @@ INIT_STATEMENTS = [
         songnum integer DEFAULT 0,
         isprivate integer,
         title varchar(50),
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+        image bytea
     )''',
     '''CREATE TABLE IF NOT EXISTS songs(
         id SERIAL,
@@ -31,7 +32,6 @@ INIT_STATEMENTS = [
         duration varchar(5),
         playlistid INTEGER REFERENCES playlists(id),
         genre varchar(10),
-        bpm varchar(5),
         PRIMARY KEY (id)
     )'''
 ]
