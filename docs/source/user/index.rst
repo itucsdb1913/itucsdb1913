@@ -55,5 +55,4 @@ In this page you can edit your password and name. If you want to change only you
 .. toctree::
 
    member1
- 
-   
+
